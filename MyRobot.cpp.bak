@@ -1,0 +1,77 @@
+#include "WPILib.h"
+#define RIGHTDRIVEPORT 4
+#define LEFTDRIVEPORT 8
+#define SHOOTERPORT 3
+#define TORRENTPORT 2
+#define PICKUPPORT 6
+#define FAN1PORT 1
+#define FAN2PORT 5
+
+// joysticks
+#define MANIPULATOR 1
+#define LEFTDRIVESTICK 2
+#define RIGHTDRIVESTICK 3
+
+
+
+class RobotDemo : public SimpleRobot
+{
+	
+	
+
+	RobotDrive myRobot;
+	Joystick leftdrivestick;
+	Joystick rightdrivestick;
+	Joystick manipulator;
+	Victor rightdrivemotor;
+	Victor leftdrivemotor;
+	Victor shooter;
+	Victor torrent;
+	Victor pickup;
+	Victor fan1motor;
+	Victor fan2motor;
+
+public:
+	RobotDemo(void):
+		myRobot(leftdrivemotor, rightdrivemotor),
+		leftdrivestick(LEFTDRIVESTICK),
+		rightdrivestick(RIGHTDRIVESTICK),
+		manipulator(MANIPULATOR),
+		rightdrivemotor(RIGHTDRIVEPORT),
+		leftdrivemotor(LEFTDRIVEPORT),
+		shooter(SHOOTERPORT),
+		torrent(TORRENTPORT),
+		pickup(PICKUPPORT),
+		fan1motor(FAN1PORT),
+		fan2motor(FAN2PORT)
+		
+		
+	{
+		myRobot.SetExpiration(0.1);
+	}
+
+	/**
+	 * Drive left & right motors for 2 seconds then stop
+	 */
+	void Autonomous(void)
+	{
+		myRobot.SetSafetyEnabled(false);
+		myRobot.Drive(0.5, 0.0); 	// drive forwards half speed
+		Wait(2.0); 				//    for 2 seconds
+		myRobot.Drive(0.0, 0.0); 	// stop robot
+	}
+
+
+	void OperatorControl(void)
+	{
+		myRobot.SetSafetyEnabled(true);
+		while (IsOperatorControl())
+		{
+			myRobot.TankDrive(leftdrivestick, rightdrivestick);
+			Wait(0.005);				// wait for a motor update time
+		}
+	}
+};
+
+START_ROBOT_CLASS(RobotDemo)
+
