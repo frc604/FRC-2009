@@ -1,4 +1,4 @@
-FRC Team 604: 2009 Robot "'09"
-=================================
+FRC Team 604: 2009 Robot w/ Kinect
+==================================
 
-This is a C++ rewrite of the original LabView code.
+[insert description]
